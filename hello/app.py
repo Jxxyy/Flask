@@ -1,4 +1,4 @@
-from flask import Flask,redirect,url_for,jsonify,make_response,request
+from flask import Flask,redirect,url_for,jsonify,make_response,request,session
 app = Flask(__name__)
 
 
@@ -34,5 +34,34 @@ def set_cookie(name):
     response = make_response(redirect(url_for('test3')))
     response.set_cookie('name', name)
     return response
+
+#模拟登陆
+@app.route('/login')
+def login():
+    session['logged_in'] = True # 写入session
+    return redirect(url_for('hello'))
+
+@app.route('/hello')
+def hello():
+    name = request.args.get('name')
+    if name is None:
+        name = request.cookies.get('name', 'Human')
+        response = '<h1>Hello, %s!</h1>' % name
+# 根据用户认证状态返回不同的内容
+    if 'logged_in' in session:
+        response += '[Authenticated]'
+    else:
+        response += '[Not Authenticated]'
+    return response
+
+#模拟登出
+@app.route('/logout')
+def logout():
+    if 'logged_in' in session:
+        session.pop('logged_in')
+    return redirect(url_for('hello')
+
+
+114
 
 
