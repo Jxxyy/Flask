@@ -12,7 +12,7 @@
 {% else %}
 <i>This user has not provided a bio.</i>
 {% endif %}
-{# 下面是电影清单（这是注释）  movies|length 模板过滤器 相当于py的len（movies）       #}
+{# 下面是电影清单（这是注释）  movies|length 模板过滤器 相当于py的len（movies） safe过滤器，不转义html      #}
 <h5>{{ user.username }}'s Watchlist ({{ movies|length }}):</h5>
 <ul>
 {% for movie in movies %}
