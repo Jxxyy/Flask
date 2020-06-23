@@ -4,11 +4,12 @@ app = Flask(__name__)
 app.secret_key='abc'
 
 
-#内部地址跳转
+#内部地址跳转  url_for 指向的是方法 不是路由
+'''
 @app.route('/')
 def index():
     return redirect(url_for('test2'))
-
+'''
 
 #flask 封装的json处理
 @app.route('/test1')
@@ -109,5 +110,29 @@ movies = [
 def watchlist():
     return render_template('watchlist.html', user=user, movies=movies,test='&#9835;')
 
-177
+@app.route('/watchlist3')
+def watchlist2():
+    return render_template('watchlist2.html', user=user, movies=movies,test='&#9835;')
 
+
+#添加全局变量和全局函数
+def bar():
+    return 'I am bar.'
+foo = 'I am foo.'
+app.jinja_env.globals['bar'] = bar
+app.jinja_env.globals['foo'] = foo
+
+#测试器用来测试变量和表达式，返回布尔类型，例如判断变量是否为数字
+def baz(n):
+    if n == 'baz':
+        return True
+    return False
+app.jinja_env.tests['baz'] = baz
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+180
