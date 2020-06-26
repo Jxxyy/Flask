@@ -1,4 +1,5 @@
-from flask import Flask,redirect,url_for,jsonify,make_response,request,session,render_template
+from flask import Flask,redirect,url_for,jsonify,make_response,request,session,render_template,flash
+
 from urllib.parse import urlparse,urljoin
 app = Flask(__name__)
 app.secret_key='abc'
@@ -134,5 +135,25 @@ app.jinja_env.tests['baz'] = baz
 def index():
     return render_template('index.html')
 
+#flash消息提示，用不着所以不看
+@app.route('/flash')
+def just_flash():
+	flash('I am flash, who is looking for me?')
+	return redirect(url_for('index'))
 
-180
+#自定义错误页面
+@app.errorhandler(404)
+def page_not_found(e):
+	return render_template('errors/404.html'), 404
+
+
+
+
+
+
+
+
+
+
+
+

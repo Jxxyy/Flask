@@ -4,7 +4,9 @@
 {% block head %}
 <meta charset="utf-8">
 <title>{% block title %}Template - HelloFlask{% endblock %}</title>
-{% block styles %}{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+{% endblock %}
 {% endblock %}
 <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
@@ -13,13 +15,19 @@
 <ul><li><a href="{{ url_for('index') }}">Home</a></li></ul>
 </nav>
 <main>
-{% block content %}
-{% endblock %}
-</main>
+{% for message in get_flashed_messages() %}
+<div class="alert">{{ message }}</div>
+{% endfor %}
+{% block content %}{% endblock %}
+</main>	
 <footer>
 {% block footer %}
 {% endblock %}
 </footer>
-{% block scripts %}{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+{% endblock %}
 </body>
 </html>
